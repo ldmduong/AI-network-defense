@@ -1,0 +1,98 @@
+{
+    "model_type": "Stable-Baselines3 DQN",
+    "version": "v2",
+    "model_file": "dqn_policy_v2.zip",
+    "state_size": 11,
+    "actions": [
+        "ALLOW",
+        "MONITOR",
+        "RATE_LIMIT",
+        "BLOCK",
+        "ESCALATE"
+    ],
+    "action_to_id": {
+        "ALLOW": 0,
+        "MONITOR": 1,
+        "RATE_LIMIT": 2,
+        "BLOCK": 3,
+        "ESCALATE": 4
+    },
+    "risk_levels": {
+        "Normal Traffic": "normal",
+        "Bots": "contain",
+        "Brute Force": "contain",
+        "Port Scanning": "contain",
+        "Web Attacks": "review",
+        "DoS": "critical",
+        "DDoS": "critical"
+    },
+    "reward_table": {
+        "normal": {
+            "ALLOW": 5,
+            "MONITOR": 3,
+            "RATE_LIMIT": -5,
+            "BLOCK": -30,
+            "ESCALATE": -8
+        },
+        "contain": {
+            "ALLOW": -10,
+            "MONITOR": 2,
+            "RATE_LIMIT": 10,
+            "BLOCK": 3,
+            "ESCALATE": -5
+        },
+        "review": {
+            "ALLOW": -15,
+            "MONITOR": 2,
+            "RATE_LIMIT": 4,
+            "BLOCK": 5,
+            "ESCALATE": 10
+        },
+        "critical": {
+            "ALLOW": -30,
+            "MONITOR": -5,
+            "RATE_LIMIT": 5,
+            "BLOCK": 15,
+            "ESCALATE": 12
+        }
+    },
+    "training": {
+        "training_flows": 10500,
+        "training_timesteps": 100000,
+        "seed": 42,
+        "device": "cuda",
+        "sample_plan": {
+            "Normal Traffic": 3000,
+            "DoS": 2500,
+            "DDoS": 2000,
+            "Port Scanning": 1500,
+            "Brute Force": 500,
+            "Web Attacks": 500,
+            "Bots": 500
+        }
+    },
+    "held_out_evaluation": {
+        "flows": 9913,
+        "sample_plan": {
+            "Normal Traffic": 3000,
+            "DoS": 2000,
+            "DDoS": 2000,
+            "Port Scanning": 1500,
+            "Brute Force": 800,
+            "Bots": 292,
+            "Web Attacks": 321
+        },
+        "total_reward": 103924.0,
+        "average_reward": 10.483607384242914,
+        "defense_metrics": {
+            "normal_flows": 3000,
+            "attack_flows": 6913,
+            "missed_attacks": 5,
+            "missed_attack_rate": 0.0007232749891508751,
+            "false_mitigations": 4,
+            "false_mitigation_rate": 0.0013333333333333333,
+            "block_rate_on_attack": 0.5764501663532475,
+            "escalation_rate": 0.03349137496217089
+        }
+    }
+}

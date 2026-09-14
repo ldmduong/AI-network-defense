@@ -1,0 +1,72 @@
+{
+    "model_type": "Stable-Baselines3 DQN",
+    "model_file": "dqn_policy.zip",
+    "state_size": 11,
+    "actions": [
+        "ALLOW",
+        "MONITOR",
+        "RATE_LIMIT",
+        "BLOCK",
+        "ESCALATE"
+    ],
+    "action_to_id": {
+        "ALLOW": 0,
+        "MONITOR": 1,
+        "RATE_LIMIT": 2,
+        "BLOCK": 3,
+        "ESCALATE": 4
+    },
+    "reward_table": {
+        "normal": {
+            "ALLOW": 5,
+            "MONITOR": 3,
+            "RATE_LIMIT": -5,
+            "BLOCK": -30,
+            "ESCALATE": -8
+        },
+        "low": {
+            "ALLOW": -8,
+            "MONITOR": 3,
+            "RATE_LIMIT": 6,
+            "BLOCK": 4,
+            "ESCALATE": 5
+        },
+        "high": {
+            "ALLOW": -30,
+            "MONITOR": -5,
+            "RATE_LIMIT": 5,
+            "BLOCK": 15,
+            "ESCALATE": 12
+        }
+    },
+    "training": {
+        "training_flows": 10500,
+        "training_timesteps": 100000,
+        "seed": 42,
+        "device": "cuda",
+        "sample_plan": {
+            "Normal Traffic": 3000,
+            "DoS": 2500,
+            "DDoS": 2000,
+            "Port Scanning": 1500,
+            "Brute Force": 500,
+            "Web Attacks": 500,
+            "Bots": 500
+        }
+    },
+    "evaluation_subset": {
+        "flows": 1000,
+        "total_reward": 6119.0,
+        "average_reward": 6.119,
+        "defense_metrics": {
+            "normal_flows": 854,
+            "attack_flows": 146,
+            "missed_attacks": 0,
+            "missed_attack_rate": 0.0,
+            "false_mitigations": 0,
+            "false_mitigation_rate": 0.0,
+            "block_rate_on_attack": 0.7397260273972602,
+            "escalation_rate": 0.006
+        }
+    }
+}
