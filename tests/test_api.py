@@ -1,6 +1,6 @@
 from pathlib import Path
 
-import pandas as pd
+
 from fastapi.testclient import TestClient
 
 from app.main import app
@@ -9,21 +9,12 @@ from app.ml_engine import ml_engine
 
 client = TestClient(app)
 
-PROJECT_DIR = Path(__file__).resolve().parent.parent
-TEST_DATA_PATH = (
-    PROJECT_DIR
-    / "data"
-    / "splits"
-    / "test.csv"
-)
+
 
 
 def create_valid_payload():
-    dataframe = pd.read_csv(TEST_DATA_PATH)
-    row = dataframe.iloc[0]
-
     return {
-        feature: float(row[feature])
+        feature: 0.0
         for feature in ml_engine.feature_columns
     }
 
